@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Study Material App</title>
+    <link rel="stylesheet" href="study.css">
+    </head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">Study<span>Hub</span></div>
+                <nav>
+                    <ul>
+                        <li><a href="#" class="active">Home</a></li>
+                        <li><a href="#">Subjects</a></li>
+                        <li><a href="#">Progress</a></li>
+                        <li><a href="#">Resources</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="main-content">
+            <aside class="sidebar">
+                <h2>Subjects</h2>
+                <ul class="subject-list" id="subject-list">
+                    <!-- Subjects will be loaded from backend -->
+                </ul>
+
+                <h2 style="margin-top: 2rem;">Progress</h2>
+                <div class="progress-summary">
+                    <p>Overall Progress: <span id="overall-progress">0%</span></p>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="overall-progress-bar" style="width: 0%;"></div>
+                    </div>
+                </div>
+            </aside>
+
+            <main class="content-area">
+                <div class="subject-header">
+                    <h1 class="subject-title" id="current-subject-title">Select a Subject</h1>
+                    <div class="progress-container">
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="subject-progress" style="width: 0%;"></div>
+                        </div>
+                        <span class="progress-text" id="subject-progress-text">0% Complete</span>
+                    </div>
+                </div>
+
+                <div id="error-container"></div>
+
+                <div class="upload-section">
+                    <button class="upload-btn" id="open-upload-modal">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                            <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
+                            <path d="M7.646 1.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 2.707V11.5a.5.5 0 0 1-1 0V2.707L5.354 4.854a.5.5 0 1 1-.708-.708l3-3z"/>
+                        </svg>
+                        Upload Study Material
+                    </button>
+                </div>
+
+                <div class="study-material" id="study-material">
+                    <div class="loading" id="loading-materials">
+                        <div class="spinner"></div>
+                    </div>
+                </div>
+
+                <div class="quiz-container hidden" id="quiz-container">
+                    <h2>Quick Quiz</h2>
+                    <div class="quiz-question" id="quiz-question">
+                        <!-- Quiz question will be displayed here -->
+                    </div>
+                    <ul class="quiz-options" id="quiz-options">
+                        <!-- Quiz options will be displayed here -->
+                    </ul>
+                    <div class="quiz-navigation">
+                        <button class="btn btn-outline" id="prev-question">Previous</button>
+                        <button class="btn btn-primary" id="next-question">Next</button>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Upload Modal -->
+    <div class="modal" id="upload-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Upload Study Material</h2>
+                <button class="close-btn" id="close-modal">&times;</button>
+            </div>
+            <form id="upload-form">
+                <div class="form-group">
+                    <label for="material-title">Title</label>
+                    <input type="text" id="material-title" class="form-control" placeholder="Enter material title" required>
+                </div>
+                <div class="form-group">
+                    <label for="material-subject">Subject</label>
+                    <select id="material-subject" class="form-control" required>
+                        <option value="">Select subject</option>
+                        <!-- Subjects will be populated dynamically -->
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="material-type">Type</label>
+                    <select id="material-type" class="form-control" required>
+                        <option value="">Select type</option>
+                        <option value="Video">Video</option>
+                        <option value="Notes">Notes</option>
+                        <option value="Paper">Paper</option>
+                        <option value="Interactive">Interactive</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="material-description">Description</label>
+                    <textarea id="material-description" class="form-control" rows="3" placeholder="Enter material description"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="material-duration">Duration (minutes)</label>
+                    <input type="number" id="material-duration" class="form-control" placeholder="Enter duration in minutes">
+                </div>
+                <div class="form-group">
+                    <label for="material-file">Upload File</label>
+                    <div class="file-input-container">
+                        <input type="file" id="material-file" class="file-input" required>
+                        <label for="material-file" class="file-input-label" id="file-input-label">
+                            Choose a file
+                        </label>
+                    </div>
+                    <div class="file-preview" id="file-preview">
+                        <p><strong>Selected file:</strong> <span id="file-name"></span></p>
+                        <p><strong>File size:</strong> <span id="file-size"></span></p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-success" style="width: 100%;" id="submit-btn">Upload Material</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2023 StudyHub - Your Learning Companion</p>
+        </div>
+    </footer>
+
+    <script src="study.js"></script>
+    
+</body>
+</html>
